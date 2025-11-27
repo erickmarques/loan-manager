@@ -1,0 +1,190 @@
+{
+  "info": {
+    "name": "Loan Manager API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "c4e28bb2-5180-43fd-9d83-cc3b467af001"
+  },
+  "item": [
+    {
+      "name": "Customer API",
+      "item": [
+        {
+          "name": "Create Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"notes\": \"amigo de sicrano\",\n  \"phone\": \"81998713888\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "customers"]
+            }
+          }
+        },
+        {
+          "name": "Update Customer",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Name\",\n  \"notes\": \"amigo de fulano\",\n  \"phone\": \"81998713999\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers/{{customerId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "customers", "{{customerId}}"]
+            }
+          }
+        },
+        {
+          "name": "Find Customer By ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers/{{customerId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "customers", "{{customerId}}"]
+            }
+          }
+        },
+        {
+          "name": "List All Customers",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "customers"]
+            }
+          }
+        },
+        {
+          "name": "Delete Customer",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers/{{customerId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "customers", "{{customerId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Loan API",
+      "item": [
+        {
+          "name": "Create Loan",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"loanDate\": \"2025-01-01\",\n  \"paymentDate\": \"2025-02-01\",\n  \"amount\": 1000.0,\n  \"percentage\": 10.0,\n  \"negotiation\": false,\n  \"customerId\": \"{{customerId}}\",\n  \"totalAmountToPay\": 1100.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/loans",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "loans"]
+            }
+          }
+        },
+        {
+          "name": "Update Loan",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"loanDate\": \"2025-01-05\",\n  \"paymentDate\": \"2025-02-05\",\n  \"amount\": 2000.0,\n  \"percentage\": 8.0,\n  \"negotiation\": true,\n  \"customerId\": \"{{customerId}}\",\n  \"totalAmountToPay\": 2160.0\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/loans/{{loanId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "loans", "{{loanId}}"]
+            }
+          }
+        },
+        {
+          "name": "Find Loan By ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/v1/loans/{{loanId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "loans", "{{loanId}}"]
+            }
+          }
+        },
+        {
+          "name": "List All Loans",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/v1/loans",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "loans"]
+            }
+          }
+        },
+        {
+          "name": "List Loans By Customer",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/v1/customers/{{customerId}}/loans",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "customers", "{{customerId}}", "loans"]
+            }
+          }
+        },
+        {
+          "name": "Delete Loan",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "http://localhost:8080/api/v1/loans/{{loanId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "loans", "{{loanId}}"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
