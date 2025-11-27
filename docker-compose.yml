@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  postgres-db:
+    container_name: postgres-db
+    image: postgres:16.3
+    environment:
+      POSTGRES_DB: "loan-manager"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "admin"
+      TZ: "America/Sao_Paulo"
+    ports:
+      - "15433:5432"
+    networks:
+      - docker-network
+    restart: always
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "marques.erick@outlook.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+      PGADMIN_CONFIG_SERVER_MODE: "True"
+      TZ: "America/Sao_Paulo"
+    ports:
+      - "18080:80"
+    depends_on:
+      - postgres-db
+    networks:
+      - docker-network
+    restart: always
+
+networks:
+  docker-network:
+    driver: bridge
