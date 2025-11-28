@@ -1,6 +1,6 @@
-package br.com.erickmarques.loan_manager.loan;
+package br.com.erickmarques.loan_manager.payment;
 
-import br.com.erickmarques.loan_manager.customer.Customer;
+import br.com.erickmarques.loan_manager.loan.Loan;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -28,23 +28,20 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-@Table(name = "loans")
+@Table(name = "payments")
 @Getter
 @Setter
 @Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = "customer")
+@ToString(exclude = "loan")
 @EqualsAndHashCode
-public class Loan {
+public class Payment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, updatable = false, columnDefinition = "uuid")
     private UUID id;
-
-    @Column(name = "loan_date", nullable = false)
-    private LocalDate loanDate;
 
     @Column(name = "payment_date")
     private LocalDate paymentDate;
@@ -52,25 +49,16 @@ public class Loan {
     @Column(name = "amount", nullable = false, precision = 18, scale = 2)
     private BigDecimal amount;
 
-    @Column(name = "percentage", precision = 5, scale = 2)
-    private BigDecimal percentage;
-
-    @Column(name = "total_amount", nullable = false, precision = 18, scale = 2)
-    private BigDecimal totalAmountToPay;
-
-    @Column(name = "negotiation", nullable = false)
-    private boolean negotiation;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", nullable = false, length = 20)
+    private PaymentType type;
 
     @Column(name = "notes", length = 4000)
     private String notes;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false, length = 20)
-    private LoanStatus status;
-
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "customer_id", nullable = false, columnDefinition = "uuid")
-    private Customer customer;
+    @JoinColumn(name = "loan_id", nullable = false, columnDefinition = "uuid")
+    private Loan loan;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

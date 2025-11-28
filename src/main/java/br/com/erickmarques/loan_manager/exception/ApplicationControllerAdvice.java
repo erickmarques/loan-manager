@@ -2,6 +2,7 @@ package br.com.erickmarques.loan_manager.exception;
 
 import br.com.erickmarques.loan_manager.customer.CustomerNotFoundException;
 import br.com.erickmarques.loan_manager.loan.LoanNotFoundException;
+import br.com.erickmarques.loan_manager.payment.PaymentNotFoundException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -58,6 +59,17 @@ public class ApplicationControllerAdvice {
     @ExceptionHandler(LoanNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiErrors handleLoanNotFoundException(LoanNotFoundException ex, HttpServletRequest request) {
+
+        return new ApiErrors(
+                LocalDateTime.now().toString(),
+                request.getRequestURI(),
+                ex.getMessage()
+        );
+    }
+
+    @ExceptionHandler(PaymentNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ApiErrors handlePaymentNotFoundException(PaymentNotFoundException ex, HttpServletRequest request) {
 
         return new ApiErrors(
                 LocalDateTime.now().toString(),

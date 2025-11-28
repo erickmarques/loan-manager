@@ -20,6 +20,6 @@ public class OpenApiConfig {
                         .license(new License().name("Apache 2.0")))
                 .externalDocs(new ExternalDocumentation()
                         .description("Project Repository")
-                        .url("https://github.com/your-repo-url"));
+                        .url("https://github.com/erickmarques/loan-manager"));
     }
 }

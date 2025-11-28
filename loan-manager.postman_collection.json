@@ -17,7 +17,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"John Doe\",\n  \"notes\": \"amigo de sicrano\",\n  \"phone\": \"81998713888\"\n}"
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"notes\": \"Friend of Erick\",\n  \"phone\": \"81998713888\"\n}"
             },
             "url": {
               "raw": "http://localhost:8080/api/v1/customers",
@@ -37,7 +37,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Updated Name\",\n  \"notes\": \"amigo de fulano\",\n  \"phone\": \"81998713999\"\n}"
+              "raw": "{\n  \"name\": \"Updated Name\",\n  \"notes\": \"Friend of Edson\",\n  \"phone\": \"81998713999\"\n}"
             },
             "url": {
               "raw": "http://localhost:8080/api/v1/customers/{{customerId}}",
@@ -181,6 +181,103 @@
               "host": ["localhost"],
               "port": "8080",
               "path": ["api", "v1", "loans", "{{loanId}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payment API",
+      "item": [
+        {
+          "name": "Create Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"loanId\": \"{{loanId}}\",\n  \"type\": \"FINISHED\",\n  \"amount\": 300.0,\n  \"notes\": \"Final payment\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/payments",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "payments"]
+            }
+          }
+        },
+        {
+          "name": "Update Payment",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"loanId\": \"{{loanId}}\",\n  \"type\": \"AGREEMENT\",\n  \"amount\": 150.0,\n  \"notes\": \"Negotiated partial payment\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/payments/{{paymentId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "payments", "{{paymentId}}"]
+            }
+          }
+        },
+        {
+          "name": "Find Payment By ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/v1/payments/{{paymentId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "payments", "{{paymentId}}"]
+            }
+          }
+        },
+        {
+          "name": "List All Payments",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/v1/payments",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "payments"]
+            }
+          }
+        },
+        {
+          "name": "List Payments By Loan ID",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "http://localhost:8080/api/v1/payments/loan/{{loanId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "payments", "loan", "{{loanId}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Payment",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "http://localhost:8080/api/v1/payments/{{paymentId}}",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "v1", "payments", "{{paymentId}}"]
             }
           }
         }
