@@ -5,7 +5,9 @@ import br.com.erickmarques.loan_manager.customer.CustomerNotFoundException;
 import br.com.erickmarques.loan_manager.customer.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -23,6 +25,10 @@ public class LoanServiceImpl implements LoanService {
     public LoanResponse create(LoanRequest request) {
         var customer = findCustomerById(request.customerId());
         var loan = loanMapper.toEntity(request, customer);
+
+        if (loan.isNegotiation() && (loan.getNotes() == null || loan.getNotes().isEmpty())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "For loan agreements, it is necessary to provide a note!");
+        }
 
         log.info("Creating loan of {} for customer ID {}.", request.totalAmountToPay(), customer.getId());
 

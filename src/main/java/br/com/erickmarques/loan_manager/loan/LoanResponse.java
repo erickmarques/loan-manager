@@ -16,6 +16,8 @@ public record LoanResponse(
         BigDecimal percentage,
         BigDecimal totalAmountToPay,
         boolean negotiation,
+        String notes,
+        LoanStatus status,
         UUID customerId,
         LocalDateTime createdAt,
         LocalDateTime updatedAt

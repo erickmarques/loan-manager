@@ -37,6 +37,9 @@ class PaymentServiceImplTest {
     private PaymentMapper paymentMapper;
 
     @Mock
+    private ProcessPaymentService processPaymentService;
+
+    @Mock
     private LoanRepository loanRepository;
 
     @Nested

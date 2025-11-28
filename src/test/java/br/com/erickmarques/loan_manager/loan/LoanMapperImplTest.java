@@ -38,6 +38,8 @@ class LoanMapperImplTest {
             assertNotNull(result);
             assertEquals(request.loanDate(), result.getLoanDate());
             assertEquals(request.amount(), result.getAmount());
+            assertEquals(request.notes(), result.getNotes());
+            assertEquals(request.status(), result.getStatus());
             assertEquals(customer, result.getCustomer());
         }
 

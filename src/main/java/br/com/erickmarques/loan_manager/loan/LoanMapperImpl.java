@@ -16,6 +16,8 @@ public class LoanMapperImpl implements LoanMapper {
                 .percentage(loan.getPercentage())
                 .totalAmountToPay(loan.getTotalAmountToPay())
                 .negotiation(loan.isNegotiation())
+                .notes(loan.getNotes())
+                .status(loan.getStatus())
                 .customerId(loan.getCustomer().getId())
                 .createdAt(loan.getCreatedAt())
                 .updatedAt(loan.getUpdatedAt())
@@ -32,6 +34,8 @@ public class LoanMapperImpl implements LoanMapper {
                 .negotiation(request.negotiation())
                 .customer(customer)
                 .totalAmountToPay(request.totalAmountToPay())
+                .notes(request.notes())
+                .status(request.status())
                 .build();
     }
 

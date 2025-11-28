@@ -35,5 +35,9 @@ public record LoanRequest(
         @NotNull(message = "The field customer ID is required.")
         UUID customerId,
 
+        String notes,
+
+        LoanStatus status,
+
         boolean negotiation
 ) {}
