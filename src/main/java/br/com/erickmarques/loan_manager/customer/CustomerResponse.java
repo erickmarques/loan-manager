@@ -11,6 +11,8 @@ public record CustomerResponse(
         String name,
         String phone,
         String notes,
+        Long quantityOpenLoans,
+        Long quantityClosedLoans,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {}

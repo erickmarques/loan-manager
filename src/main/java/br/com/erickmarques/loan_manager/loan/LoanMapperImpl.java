@@ -18,7 +18,7 @@ public class LoanMapperImpl implements LoanMapper {
                 .negotiation(loan.isNegotiation())
                 .notes(loan.getNotes())
                 .status(loan.getStatus())
-                .customerId(loan.getCustomer().getId())
+                .customerName(loan.getCustomer().getName())
                 .createdAt(loan.getCreatedAt())
                 .updatedAt(loan.getUpdatedAt())
                 .build();

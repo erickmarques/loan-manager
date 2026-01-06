@@ -1,5 +1,7 @@
 package br.com.erickmarques.loan_manager.customer;
 
+import br.com.erickmarques.loan_manager.loan.LoanRepository;
+import br.com.erickmarques.loan_manager.loan.LoanStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
+    private final LoanRepository loanRepository;
 
     @Override
     public CustomerResponse create(CustomerRequest request) {
@@ -24,7 +27,9 @@ public class CustomerServiceImpl implements CustomerService {
 
         log.info("Registered customer with ID {}.", customer.getId());
 
-        return customerMapper.toResponse(customer);
+        var summary = loanRepository.countLoansByCustomer(customer.getId());
+
+        return customerMapper.toResponse(customer, summary.openLoans(), summary.closedLoans());
     }
 
     @Override
@@ -38,7 +43,9 @@ public class CustomerServiceImpl implements CustomerService {
 
         log.info("Updated customer with ID {}.", existing.getId());
 
-        return customerMapper.toResponse(updated);
+        var summary = loanRepository.countLoansByCustomer(updated.getId());
+
+        return customerMapper.toResponse(updated, summary.openLoans(), summary.closedLoans());
     }
 
     @Override
@@ -47,16 +54,27 @@ public class CustomerServiceImpl implements CustomerService {
 
         var customer = findCustomerById(id);
 
-        return customerMapper.toResponse(customer);
+        var summary = loanRepository.countLoansByCustomer(customer.getId());
+
+        return customerMapper.toResponse(customer, summary.openLoans(), summary.closedLoans());
     }
 
     @Override
     public List<CustomerResponse> findAll() {
         log.info("Finding all customers.");
 
-        return customerRepository.findAllByOrderByNameAsc()
-                .stream()
-                .map(customerMapper::toResponse)
+        var customers = customerRepository.findAllByOrderByNameAsc();
+
+        return customers.stream()
+                .map(customer -> {
+                    var summary = loanRepository.countLoansByCustomer(customer.getId());
+
+                    return customerMapper.toResponse(
+                            customer,
+                            summary.openLoans(),
+                            summary.closedLoans()
+                    );
+                })
                 .toList();
     }
 

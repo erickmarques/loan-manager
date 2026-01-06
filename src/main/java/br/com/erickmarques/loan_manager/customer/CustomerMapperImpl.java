@@ -8,12 +8,16 @@ import org.springframework.stereotype.Component;
 public class CustomerMapperImpl implements CustomerMapper {
 
     @Override
-    public CustomerResponse toResponse(Customer customer) {
+    public CustomerResponse toResponse(Customer customer,
+                                       Long openLoans,
+                                       Long closedLoans) {
         return CustomerResponse.builder()
                 .id(customer.getId())
                 .name(customer.getName())
                 .phone(customer.getPhone())
                 .notes(customer.getNotes())
+                .quantityOpenLoans(openLoans)
+                .quantityClosedLoans(closedLoans)
                 .createdAt(customer.getCreatedAt())
                 .updatedAt(customer.getUpdatedAt())
                 .build();

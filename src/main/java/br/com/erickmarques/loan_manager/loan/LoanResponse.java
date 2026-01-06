@@ -18,7 +18,7 @@ public record LoanResponse(
         boolean negotiation,
         String notes,
         LoanStatus status,
-        UUID customerId,
+        String customerName,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {}
