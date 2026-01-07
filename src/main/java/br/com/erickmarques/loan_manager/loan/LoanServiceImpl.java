@@ -22,7 +22,7 @@ public class LoanServiceImpl implements LoanService {
     private final CustomerRepository customerRepository;
 
     @Override
-    public LoanResponse create(LoanRequest request) {
+    public LoanResponse create(LoanRequestCreate request) {
         var customer = findCustomerById(request.customerId());
         var loan = loanMapper.toEntity(request, customer);
 
@@ -40,12 +40,11 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public LoanResponse update(UUID id, LoanRequest request) {
+    public LoanResponse update(UUID id, LoanRequestUpdate request) {
         log.info("Requesting loan update with ID {}.", id);
 
         var existing = findLoanById(id);
-        var customer = findCustomerById(request.customerId());
-        var updated = loanMapper.updateEntity(existing, request, customer);
+        var updated = loanMapper.updateEntity(existing, request, existing.getCustomer());
 
         loanRepository.save(updated);
 

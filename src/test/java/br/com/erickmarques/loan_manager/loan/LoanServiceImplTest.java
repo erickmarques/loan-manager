@@ -45,12 +45,12 @@ class LoanServiceImplTest {
         @Test
         void shouldCreateLoanSuccessfully() {
             // Arrange
-            var request = LoanRequestBuilder.createDefault();
+            var request = LoanRequestBuilder.createWithCostumer(UUID.randomUUID());
             var customer = CustomerBuilder.createDefault();
             var loan = LoanBuilder.createDefault();
             var response = LoanResponse.builder().id(loan.getId()).build();
 
-            when(customerRepository.findById(request.customerId())).thenReturn(Optional.of(customer));
+            when(customerRepository.findById(any())).thenReturn(Optional.of(customer));
             when(loanMapper.toEntity(request, customer)).thenReturn(loan);
             when(loanMapper.toResponse(loan)).thenReturn(response);
 
@@ -66,8 +66,8 @@ class LoanServiceImplTest {
         @Test
         void shouldThrowWhenCustomerNotFound() {
             // Arrange
-            var request = LoanRequestBuilder.createDefault();
-            when(customerRepository.findById(request.customerId())).thenReturn(Optional.empty());
+            var request = LoanRequestBuilder.createWithCostumer(UUID.randomUUID());
+            when(customerRepository.findById(any())).thenReturn(Optional.empty());
 
             // Act + Assert
             assertThrows(CustomerNotFoundException.class, () -> service.create(request));
@@ -89,7 +89,6 @@ class LoanServiceImplTest {
             var response = LoanResponse.builder().id(updatedLoan.getId()).build();
 
             when(loanRepository.findById(loanId)).thenReturn(Optional.of(existingLoan));
-            when(customerRepository.findById(request.customerId())).thenReturn(Optional.of(customer));
             when(loanMapper.updateEntity(existingLoan, request, customer)).thenReturn(updatedLoan);
             when(loanMapper.toResponse(updatedLoan)).thenReturn(response);
 
@@ -111,20 +110,6 @@ class LoanServiceImplTest {
 
             // Act + Assert
             assertThrows(LoanNotFoundException.class, () -> service.update(loanId, request));
-            verify(loanRepository, never()).save(any());
-        }
-
-        @Test
-        void shouldThrowWhenCustomerNotFoundOnUpdate() {
-            // Arrange
-            var loanId = UUID.randomUUID();
-            var request = LoanRequestBuilder.createDefault();
-            var existingLoan = LoanBuilder.createDefault();
-            when(loanRepository.findById(loanId)).thenReturn(Optional.of(existingLoan));
-            when(customerRepository.findById(request.customerId())).thenReturn(Optional.empty());
-
-            // Act + Assert
-            assertThrows(CustomerNotFoundException.class, () -> service.update(loanId, request));
             verify(loanRepository, never()).save(any());
         }
     }

@@ -25,7 +25,7 @@ public class LoanMapperImpl implements LoanMapper {
     }
 
     @Override
-    public Loan toEntity(LoanRequest request, Customer customer) {
+    public Loan toEntity(LoanRequestCreate request, Customer customer) {
         return Loan.builder()
                 .loanDate(request.loanDate())
                 .paymentDate(request.paymentDate())
@@ -40,7 +40,7 @@ public class LoanMapperImpl implements LoanMapper {
     }
 
     @Override
-    public Loan updateEntity(Loan existing, LoanRequest request, Customer customer) {
+    public Loan updateEntity(Loan existing, LoanRequestUpdate request, Customer customer) {
         return existing.toBuilder()
                 .loanDate(request.loanDate())
                 .paymentDate(request.paymentDate())

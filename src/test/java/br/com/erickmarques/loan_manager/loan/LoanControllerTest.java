@@ -33,7 +33,7 @@ class LoanControllerTest {
         @Test
         void shouldCreateLoanSuccessfully() {
             // Arrange
-            var request = LoanRequestBuilder.createDefault();
+            var request = LoanRequestBuilder.createWithCostumer(UUID.randomUUID());
             var response = LoanResponseBuilder.createDefault();
 
             when(loanService.create(request)).thenReturn(response);

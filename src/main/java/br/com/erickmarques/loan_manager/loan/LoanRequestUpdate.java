@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Builder
-public record LoanRequest(
+public record LoanRequestUpdate(
 
         @NotNull(message = "The field loan date is required.")
         LocalDate loanDate,
@@ -33,9 +33,6 @@ public record LoanRequest(
         @DecimalMin(value = "0.0", message = "Percentage cannot be negative.")
         @Digits(integer = 3, fraction = 2)
         BigDecimal percentage,
-
-        @NotNull(message = "The field customer ID is required.")
-        UUID customerId,
 
         String notes,
 

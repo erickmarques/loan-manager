@@ -11,6 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
+import java.util.UUID;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -28,7 +30,7 @@ class LoanMapperImplTest {
         @Test
         void shouldMapRequestToEntitySuccessfully() {
             // Arrange
-            var request = LoanRequestBuilder.createDefault();
+            var request = LoanRequestBuilder.createWithCostumer(UUID.randomUUID());
             var customer = CustomerBuilder.createDefault();
 
             // Act
@@ -46,7 +48,7 @@ class LoanMapperImplTest {
         @Test
         void shouldFailWhenRequestHasNullRequiredFields() {
             // Arrange
-            var request = LoanRequest.builder().build();
+            var request = LoanRequestCreate.builder().build();
             var customer = Customer.builder().build();
 
             // Act
@@ -72,7 +74,7 @@ class LoanMapperImplTest {
             // Assert
             assertNotNull(response);
             assertEquals(loan.getId(), response.id());
-            assertEquals(loan.getCustomer().getId(), response.customerId());
+            assertEquals(loan.getCustomer().getName(), response.customerName());
         }
 
         @Test
@@ -108,7 +110,7 @@ class LoanMapperImplTest {
         void shouldNotBreakWhenUpdatingUsingNullFields() {
             // Arrange
             Loan existing = Loan.builder().build();
-            var request = LoanRequest.builder().build();
+            var request = LoanRequestUpdate.builder().build();
             var customer = Customer.builder().build();
 
             // Act

@@ -59,9 +59,11 @@ class CustomerMapperImplTest {
         void shouldMapCustomerToResponseSuccessfully() {
             // Arrange
             Customer customer = CustomerBuilder.createDefault();
+            Long quantityOpenLoans = 1L;
+            Long quantityClosedLoans = 2L;
 
             // Act
-            CustomerResponse response = mapper.toResponse(customer);
+            CustomerResponse response = mapper.toResponse(customer, quantityOpenLoans, quantityClosedLoans);
 
             // Assert
             assertNotNull(response);
@@ -74,7 +76,7 @@ class CustomerMapperImplTest {
         @Test
         void shouldThrowExceptionWhenCustomerIsNull() {
             // Act & Assert
-            assertThrows(NullPointerException.class, () -> mapper.toResponse(null));
+            assertThrows(NullPointerException.class, () -> mapper.toResponse(null, null, null));
         }
     }
 

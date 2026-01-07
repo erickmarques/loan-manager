@@ -47,7 +47,7 @@ public class LoanController {
             }
     )
     @PostMapping
-    public ResponseEntity<LoanResponse> create(@RequestBody @Validated LoanRequest request) {
+    public ResponseEntity<LoanResponse> create(@RequestBody @Validated LoanRequestCreate request) {
         var response = loanService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -67,7 +67,7 @@ public class LoanController {
     @PutMapping("/{id}")
     public ResponseEntity<LoanResponse> update(
             @PathVariable UUID id,
-            @RequestBody @Validated LoanRequest request
+            @RequestBody @Validated LoanRequestUpdate request
     ) {
         var response = loanService.update(id, request);
         return ResponseEntity.ok(response);

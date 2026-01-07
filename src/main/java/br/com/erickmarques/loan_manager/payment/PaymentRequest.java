@@ -23,7 +23,7 @@ public record PaymentRequest(
         BigDecimal amount,
         String notes,
 
-        @NotEmpty(message = "The field type is required.")
+        @NotNull(message = "The field type is required.")
         PaymentType type,
 
         @NotNull(message = "The field loanId is required.")

@@ -5,9 +5,9 @@ import java.util.UUID;
 
 public interface LoanService {
 
-    LoanResponse create(LoanRequest request);
+    LoanResponse create(LoanRequestCreate request);
 
-    LoanResponse update(UUID id, LoanRequest request);
+    LoanResponse update(UUID id, LoanRequestUpdate request);
 
     LoanResponse findById(UUID id);
 

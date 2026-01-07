@@ -83,10 +83,11 @@ class PaymentControllerIntegrationTest {
     @Test
     void shouldCreatePaymentSuccessfully() throws Exception {
         var request = PaymentRequestBuilder.createWithLoan(loanId);
+        var payload = objectMapper.writeValueAsString(request);
 
         mockMvc.perform(post(PATH)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                        .content(payload))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.loanId").value(request.loanId().toString()))
                 .andExpect(jsonPath("$.amount").value(request.amount().doubleValue()));

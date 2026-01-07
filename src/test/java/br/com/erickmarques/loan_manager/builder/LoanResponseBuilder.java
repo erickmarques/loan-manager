@@ -18,7 +18,7 @@ public class LoanResponseBuilder {
                 .percentage(new BigDecimal("2.5"))
                 .totalAmountToPay(new BigDecimal("1600.00"))
                 .negotiation(true)
-                .customerId(UUID.fromString("3fa85f64-5717-4562-b3fc-2c963f66afa6"))
+                .customerName("Teste Erick")
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
