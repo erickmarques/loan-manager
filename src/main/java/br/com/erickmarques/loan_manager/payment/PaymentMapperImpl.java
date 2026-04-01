@@ -21,7 +21,7 @@ public class PaymentMapperImpl implements PaymentMapper {
     }
 
     @Override
-    public Payment toEntity(PaymentRequest request, Loan loan) {
+    public Payment toEntity(PaymentRequestCreate request, Loan loan) {
         return Payment.builder()
                 .paymentDate(request.paymentDate())
                 .amount(request.amount())
@@ -32,13 +32,12 @@ public class PaymentMapperImpl implements PaymentMapper {
     }
 
     @Override
-    public Payment updateEntity(Payment existing, PaymentRequest request, Loan loan) {
+    public Payment updateEntity(Payment existing, PaymentRequestUpdate request) {
         return existing.toBuilder()
                 .paymentDate(request.paymentDate())
                 .amount(request.amount())
                 .notes(request.notes())
                 .type(request.type())
-                .loan(loan)
                 .build();
     }
 }

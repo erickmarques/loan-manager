@@ -2,17 +2,15 @@ package br.com.erickmarques.loan_manager.payment;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Digits;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Builder
-public record PaymentRequest(
+public record PaymentRequestUpdate(
         @NotNull(message = "The field loan date is required.")
         LocalDate paymentDate,
 
@@ -24,8 +22,5 @@ public record PaymentRequest(
         String notes,
 
         @NotNull(message = "The field type is required.")
-        PaymentType type,
-
-        @NotNull(message = "The field loanId is required.")
-        UUID loanId
+        PaymentType type
 ) {}

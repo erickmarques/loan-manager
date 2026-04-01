@@ -57,7 +57,7 @@ class PaymentControllerTest {
         void shouldUpdatePaymentSuccessfully() {
             // Arrange
             var paymentId = UUID.randomUUID();
-            var request = PaymentRequestBuilder.createDefault();
+            var request = PaymentRequestBuilder.createUpdateDefault();
             var response = PaymentResponseBuilder.createDefault();
 
             when(paymentService.update(paymentId, request)).thenReturn(response);

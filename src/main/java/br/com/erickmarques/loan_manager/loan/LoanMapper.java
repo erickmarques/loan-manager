@@ -6,5 +6,5 @@ public interface LoanMapper {
 
     LoanResponse toResponse(Loan loan);
     Loan toEntity(LoanRequestCreate request, Customer customer);
-    Loan updateEntity(Loan existing, LoanRequestUpdate request, Customer customer);
+    Loan updateEntity(Loan existing, LoanRequestUpdate request);
 }

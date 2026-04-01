@@ -47,7 +47,7 @@ public class PaymentController {
             }
     )
     @PostMapping
-    public ResponseEntity<PaymentResponse> create(@RequestBody @Validated PaymentRequest request) {
+    public ResponseEntity<PaymentResponse> create(@RequestBody @Validated PaymentRequestCreate request) {
         var response = paymentService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -67,7 +67,7 @@ public class PaymentController {
     @PutMapping("/{id}")
     public ResponseEntity<PaymentResponse> update(
             @PathVariable UUID id,
-            @RequestBody @Validated PaymentRequest request
+            @RequestBody @Validated PaymentRequestUpdate request
     ) {
         var response = paymentService.update(id, request);
         return ResponseEntity.ok(response);

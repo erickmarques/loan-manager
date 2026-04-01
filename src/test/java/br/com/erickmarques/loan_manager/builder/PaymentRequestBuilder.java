@@ -1,6 +1,7 @@
 package br.com.erickmarques.loan_manager.builder;
 
-import br.com.erickmarques.loan_manager.payment.PaymentRequest;
+import br.com.erickmarques.loan_manager.payment.PaymentRequestCreate;
+import br.com.erickmarques.loan_manager.payment.PaymentRequestUpdate;
 import br.com.erickmarques.loan_manager.payment.PaymentType;
 
 import java.math.BigDecimal;
@@ -9,8 +10,8 @@ import java.util.UUID;
 
 public class PaymentRequestBuilder {
 
-    public static PaymentRequest createDefault() {
-        return PaymentRequest.builder()
+    public static PaymentRequestCreate createDefault() {
+        return PaymentRequestCreate.builder()
                 .paymentDate(LocalDate.now())
                 .amount(BigDecimal.valueOf(150.75))
                 .notes("Default payment request")
@@ -19,8 +20,17 @@ public class PaymentRequestBuilder {
                 .build();
     }
 
-    public static PaymentRequest createWithLoan(UUID loanId) {
-        return PaymentRequest.builder()
+    public static PaymentRequestUpdate createUpdateDefault() {
+        return PaymentRequestUpdate.builder()
+                .paymentDate(LocalDate.now())
+                .amount(BigDecimal.valueOf(150.75))
+                .notes("Default payment request")
+                .type(PaymentType.INTEREST)
+                .build();
+    }
+
+    public static PaymentRequestCreate createWithLoan(UUID loanId) {
+        return PaymentRequestCreate.builder()
                 .paymentDate(LocalDate.now())
                 .amount(BigDecimal.valueOf(150.75))
                 .notes("Default payment request")

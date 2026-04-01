@@ -44,7 +44,7 @@ public class LoanServiceImpl implements LoanService {
         log.info("Requesting loan update with ID {}.", id);
 
         var existing = findLoanById(id);
-        var updated = loanMapper.updateEntity(existing, request, existing.getCustomer());
+        var updated = loanMapper.updateEntity(existing, request);
 
         loanRepository.save(updated);
 

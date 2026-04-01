@@ -106,6 +106,7 @@ class LoanControllerIntegrationTest {
                 .percentage(createRequest.percentage())
                 .totalAmountToPay(createRequest.totalAmountToPay().add(createRequest.totalAmountToPay()))
                 .negotiation(true)
+                .status(LoanStatus.OPEN)
                 .build();
 
         mockMvc.perform(put(PATH_ID, createdResponse.id())

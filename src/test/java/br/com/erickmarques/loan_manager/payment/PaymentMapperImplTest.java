@@ -45,7 +45,7 @@ class PaymentMapperImplTest {
         void shouldHandleNullFieldsGracefully() {
             // Arrange
             var loan = LoanBuilder.createDefault();
-            var request = PaymentRequest.builder().build();
+            var request = PaymentRequestCreate.builder().build();
 
             // Act
             var result = mapper.toEntity(request, loan);
@@ -96,10 +96,10 @@ class PaymentMapperImplTest {
             // Arrange
             var loan = LoanBuilder.createDefault();
             var existing = PaymentBuilder.createDefault();
-            var request = PaymentRequestBuilder.createDefault();
+            var request = PaymentRequestBuilder.createUpdateDefault();
 
             // Act
-            var updated = mapper.updateEntity(existing, request, loan);
+            var updated = mapper.updateEntity(existing, request);
 
             // Assert
             assertNotNull(updated);
@@ -115,10 +115,10 @@ class PaymentMapperImplTest {
             // Arrange
             var loan = LoanBuilder.createDefault();
             var existing = PaymentBuilder.createDefault();
-            var request = PaymentRequest.builder().build();
+            var request = PaymentRequestUpdate.builder().build();
 
             // Act
-            var updated = mapper.updateEntity(existing, request, loan);
+            var updated = mapper.updateEntity(existing, request);
 
             // Assert
             assertNull(updated.getPaymentDate());

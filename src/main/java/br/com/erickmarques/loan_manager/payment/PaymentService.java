@@ -5,9 +5,9 @@ import java.util.UUID;
 
 public interface PaymentService {
 
-    PaymentResponse create(PaymentRequest request);
+    PaymentResponse create(PaymentRequestCreate request);
 
-    PaymentResponse update(UUID id, PaymentRequest request);
+    PaymentResponse update(UUID id, PaymentRequestUpdate request);
 
     PaymentResponse findById(UUID id);
 

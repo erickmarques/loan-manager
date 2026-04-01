@@ -129,7 +129,7 @@ class PaymentControllerIntegrationTest {
                 PaymentResponse.class
         );
 
-        var updateRequest = PaymentRequest.builder()
+        var updateRequest = PaymentRequestCreate.builder()
                 .paymentDate(createRequest.paymentDate())
                 .amount(createRequest.amount().add(createRequest.amount()))
                 .loanId(createRequest.loanId())

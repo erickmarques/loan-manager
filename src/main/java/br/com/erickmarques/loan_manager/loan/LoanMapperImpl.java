@@ -40,7 +40,7 @@ public class LoanMapperImpl implements LoanMapper {
     }
 
     @Override
-    public Loan updateEntity(Loan existing, LoanRequestUpdate request, Customer customer) {
+    public Loan updateEntity(Loan existing, LoanRequestUpdate request) {
         return existing.toBuilder()
                 .loanDate(request.loanDate())
                 .paymentDate(request.paymentDate())
@@ -48,7 +48,8 @@ public class LoanMapperImpl implements LoanMapper {
                 .percentage(request.percentage())
                 .negotiation(request.negotiation())
                 .totalAmountToPay(request.totalAmountToPay())
-                .customer(customer)
+                .notes(request.notes())
+                .status(request.status())
                 .build();
     }
 }

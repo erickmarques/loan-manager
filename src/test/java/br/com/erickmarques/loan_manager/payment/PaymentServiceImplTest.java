@@ -85,15 +85,14 @@ class PaymentServiceImplTest {
         void shouldUpdatePaymentSuccessfully() {
             // Arrange
             var paymentId = UUID.randomUUID();
-            var request = PaymentRequestBuilder.createDefault();
+            var request = PaymentRequestBuilder.createUpdateDefault();
             var loan = LoanBuilder.createDefault();
             var existingPayment = PaymentBuilder.createDefault();
             var updatedPayment = PaymentBuilder.createDefault();
             var response = PaymentResponse.builder().id(updatedPayment.getId()).build();
 
             when(paymentRepository.findById(paymentId)).thenReturn(Optional.of(existingPayment));
-            when(loanRepository.findById(request.loanId())).thenReturn(Optional.of(loan));
-            when(paymentMapper.updateEntity(existingPayment, request, loan)).thenReturn(updatedPayment);
+            when(paymentMapper.updateEntity(existingPayment, request)).thenReturn(updatedPayment);
             when(paymentMapper.toResponse(updatedPayment)).thenReturn(response);
 
             // Act
@@ -109,26 +108,11 @@ class PaymentServiceImplTest {
         void shouldThrowWhenPaymentNotFoundOnUpdate() {
             // Arrange
             var paymentId = UUID.randomUUID();
-            var request = PaymentRequestBuilder.createDefault();
+            var request = PaymentRequestBuilder.createUpdateDefault();
             when(paymentRepository.findById(paymentId)).thenReturn(Optional.empty());
 
             // Act + Assert
             assertThrows(PaymentNotFoundException.class, () -> service.update(paymentId, request));
-            verify(paymentRepository, never()).save(any());
-        }
-
-        @Test
-        void shouldThrowWhenLoanNotFoundOnUpdate() {
-            // Arrange
-            var paymentId = UUID.randomUUID();
-            var request = PaymentRequestBuilder.createDefault();
-            var existingPayment = PaymentBuilder.createDefault();
-
-            when(paymentRepository.findById(paymentId)).thenReturn(Optional.of(existingPayment));
-            when(loanRepository.findById(request.loanId())).thenReturn(Optional.empty());
-
-            // Act + Assert
-            assertThrows(LoanNotFoundException.class, () -> service.update(paymentId, request));
             verify(paymentRepository, never()).save(any());
         }
     }

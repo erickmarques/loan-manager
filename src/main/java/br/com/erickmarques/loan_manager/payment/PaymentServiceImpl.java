@@ -21,7 +21,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final ProcessPaymentService processPaymentService;
 
     @Override
-    public PaymentResponse create(PaymentRequest request) {
+    public PaymentResponse create(PaymentRequestCreate request) {
         var loan = findLoanById(request.loanId());
         var payment = paymentMapper.toEntity(request, loan);
 
@@ -37,12 +37,11 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    public PaymentResponse update(UUID id, PaymentRequest request) {
+    public PaymentResponse update(UUID id, PaymentRequestUpdate request) {
         log.info("Requesting payment update with ID {}.", id);
 
         var existing = findPaymentById(id);
-        var loan = findLoanById(request.loanId());
-        var updated = paymentMapper.updateEntity(existing, request, loan);
+        var updated = paymentMapper.updateEntity(existing, request);
 
         paymentRepository.save(updated);
 

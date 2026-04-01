@@ -89,7 +89,7 @@ class LoanServiceImplTest {
             var response = LoanResponse.builder().id(updatedLoan.getId()).build();
 
             when(loanRepository.findById(loanId)).thenReturn(Optional.of(existingLoan));
-            when(loanMapper.updateEntity(existingLoan, request, customer)).thenReturn(updatedLoan);
+            when(loanMapper.updateEntity(existingLoan, request)).thenReturn(updatedLoan);
             when(loanMapper.toResponse(updatedLoan)).thenReturn(response);
 
             // Act

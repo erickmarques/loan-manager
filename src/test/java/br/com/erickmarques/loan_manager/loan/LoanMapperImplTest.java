@@ -98,12 +98,13 @@ class LoanMapperImplTest {
             var customer = CustomerBuilder.createDefault();
 
             // Act
-            var updated = mapper.updateEntity(existing, request, customer);
+            var updated = mapper.updateEntity(existing, request);
 
             // Assert
             assertNotNull(updated);
             assertEquals(request.loanDate(), updated.getLoanDate());
-            assertEquals(customer, updated.getCustomer());
+            assertEquals(request.notes(), updated.getNotes());
+            assertEquals(request.status(), updated.getStatus());
         }
 
         @Test
@@ -114,7 +115,7 @@ class LoanMapperImplTest {
             var customer = Customer.builder().build();
 
             // Act
-            var updated = mapper.updateEntity(existing, request, customer);
+            var updated = mapper.updateEntity(existing, request);
 
             // Assert
             assertNull(updated.getLoanDate());
