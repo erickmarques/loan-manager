@@ -48,8 +48,7 @@ public class PaymentController {
     )
     @PostMapping
     public ResponseEntity<PaymentResponse> create(@RequestBody @Validated PaymentRequestCreate request) {
-        var response = paymentService.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(paymentService.create(request));
     }
 
     @Operation(
@@ -69,8 +68,7 @@ public class PaymentController {
             @PathVariable UUID id,
             @RequestBody @Validated PaymentRequestUpdate request
     ) {
-        var response = paymentService.update(id, request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(paymentService.update(id, request));
     }
 
     @Operation(
@@ -85,8 +83,7 @@ public class PaymentController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<PaymentResponse> findById(@PathVariable UUID id) {
-        var response = paymentService.findById(id);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(paymentService.findById(id));
     }
 
     @Operation(
@@ -98,8 +95,7 @@ public class PaymentController {
     )
     @GetMapping
     public ResponseEntity<List<PaymentResponse>> findAll() {
-        var payments = paymentService.findAll();
-        return ResponseEntity.ok(payments);
+        return ResponseEntity.ok(paymentService.findAll());
     }
 
     @Operation(
@@ -111,8 +107,7 @@ public class PaymentController {
     )
     @GetMapping("/loan/{loanId}")
     public ResponseEntity<List<PaymentResponse>> findAllByLoanId(@PathVariable UUID loanId) {
-        var payments = paymentService.findAllByLoanId(loanId);
-        return ResponseEntity.ok(payments);
+        return ResponseEntity.ok(paymentService.findAllByLoanId(loanId));
     }
 
     @Operation(

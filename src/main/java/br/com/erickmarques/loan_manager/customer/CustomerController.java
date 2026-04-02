@@ -46,8 +46,7 @@ public class CustomerController {
     )
     @PostMapping
     public ResponseEntity<CustomerResponse> create(@RequestBody @Validated CustomerRequest request) {
-        var response = customerService.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(customerService.create(request));
     }
 
     @Operation(
@@ -67,8 +66,7 @@ public class CustomerController {
             @PathVariable UUID id,
             @RequestBody @Validated CustomerRequest request
     ) {
-        var response = customerService.update(id, request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(customerService.update(id, request));
     }
 
     @Operation(
@@ -83,8 +81,7 @@ public class CustomerController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<CustomerResponse> findById(@PathVariable UUID id) {
-        var response = customerService.findById(id);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(customerService.findById(id));
     }
 
     @Operation(
@@ -96,8 +93,7 @@ public class CustomerController {
     )
     @GetMapping
     public ResponseEntity<List<CustomerResponse>> findAll() {
-        var customers = customerService.findAll();
-        return ResponseEntity.ok(customers);
+        return ResponseEntity.ok(customerService.findAll());
     }
 
     @Operation(

@@ -12,8 +12,6 @@ public interface LoanRepository extends JpaRepository<Loan, UUID> {
     List<Loan> findAllByCustomerIdOrderByPaymentDateAsc(UUID customerId);
     List<Loan> findAllByOrderByPaymentDateAsc();
 
-
-
     @Query("""
         SELECT new br.com.erickmarques.loan_manager.loan.CustomerLoanSummaryProjection(
             SUM(CASE WHEN l.status = br.com.erickmarques.loan_manager.loan.LoanStatus.OPEN THEN 1 ELSE 0 END),
@@ -23,5 +21,4 @@ public interface LoanRepository extends JpaRepository<Loan, UUID> {
         WHERE l.customer.id = :customerId
     """)
     CustomerLoanSummaryProjection countLoansByCustomer(@Param("customerId") UUID customerId);
-
 }

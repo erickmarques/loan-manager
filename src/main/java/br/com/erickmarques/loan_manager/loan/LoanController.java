@@ -48,8 +48,7 @@ public class LoanController {
     )
     @PostMapping
     public ResponseEntity<LoanResponse> create(@RequestBody @Validated LoanRequestCreate request) {
-        var response = loanService.create(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(loanService.create(request));
     }
 
     @Operation(
@@ -69,8 +68,7 @@ public class LoanController {
             @PathVariable UUID id,
             @RequestBody @Validated LoanRequestUpdate request
     ) {
-        var response = loanService.update(id, request);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(loanService.update(id, request));
     }
 
     @Operation(
@@ -85,8 +83,7 @@ public class LoanController {
     )
     @GetMapping("/{id}")
     public ResponseEntity<LoanResponse> findById(@PathVariable UUID id) {
-        var response = loanService.findById(id);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(loanService.findById(id));
     }
 
     @Operation(
@@ -98,8 +95,7 @@ public class LoanController {
     )
     @GetMapping
     public ResponseEntity<List<LoanResponse>> findAll() {
-        var loans = loanService.findAll();
-        return ResponseEntity.ok(loans);
+        return ResponseEntity.ok(loanService.findAll());
     }
 
     @Operation(
@@ -111,8 +107,7 @@ public class LoanController {
     )
     @GetMapping("/customer/{customerId}")
     public ResponseEntity<List<LoanResponse>> findAllByCustomerId(@PathVariable UUID customerId) {
-        var loans = loanService.findAllByCustomerId(customerId);
-        return ResponseEntity.ok(loans);
+        return ResponseEntity.ok(loanService.findAllByCustomerId(customerId));
     }
 
     @Operation(
