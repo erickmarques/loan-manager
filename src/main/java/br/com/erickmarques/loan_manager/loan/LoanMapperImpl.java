@@ -3,6 +3,8 @@ package br.com.erickmarques.loan_manager.loan;
 import br.com.erickmarques.loan_manager.customer.Customer;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Component
 public class LoanMapperImpl implements LoanMapper {
 
@@ -19,6 +21,25 @@ public class LoanMapperImpl implements LoanMapper {
                 .notes(loan.getNotes())
                 .status(loan.getStatus())
                 .customerName(loan.getCustomer().getName())
+                .createdAt(loan.getCreatedAt())
+                .updatedAt(loan.getUpdatedAt())
+                .build();
+    }
+
+    @Override
+    public LoanResponse toResponse(Loan loan, BigDecimal totalReceived) {
+        return LoanResponse.builder()
+                .id(loan.getId())
+                .loanDate(loan.getLoanDate())
+                .paymentDate(loan.getPaymentDate())
+                .amount(loan.getAmount())
+                .percentage(loan.getPercentage())
+                .totalAmountToPay(loan.getTotalAmountToPay())
+                .negotiation(loan.isNegotiation())
+                .notes(loan.getNotes())
+                .status(loan.getStatus())
+                .customerName(loan.getCustomer().getName())
+                .totalReceived(totalReceived)
                 .createdAt(loan.getCreatedAt())
                 .updatedAt(loan.getUpdatedAt())
                 .build();

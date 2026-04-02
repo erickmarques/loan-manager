@@ -5,8 +5,7 @@ import lombok.Builder;
 import java.math.BigDecimal;
 
 @Builder
-public record DashboardSummaryResponse(
+public record SummaryTotalResponse(
         BigDecimal totalLoaned,
-        BigDecimal totalReceived,
-        BigDecimal netAmount
+        BigDecimal totalToReceive
 ) {}

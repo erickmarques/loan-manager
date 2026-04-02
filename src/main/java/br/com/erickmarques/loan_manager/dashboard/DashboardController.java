@@ -35,7 +35,13 @@ public class DashboardController {
             }
     )
     @GetMapping("/summary")
-    public ResponseEntity<DashboardSummaryResponse> getSummaryForDate(@RequestParam(required = false) LocalDate date) {
+    public ResponseEntity<SummaryResponse> getSummaryForDate(@RequestParam(required = false) LocalDate date) {
         return ResponseEntity.ok(dashboardService.getSummaryForDate(date));
     }
+
+    @GetMapping("/summary-total")
+    public ResponseEntity<SummaryTotalResponse> getSummaryTotal() {
+        return ResponseEntity.ok(dashboardService.getSummaryTotal());
+    }
+
 }

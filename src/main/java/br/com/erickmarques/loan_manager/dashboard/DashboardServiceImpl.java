@@ -15,12 +15,19 @@ public class DashboardServiceImpl implements DashboardService {
     private final DashboardRepository dashboardRepository;
 
     @Override
-    public DashboardSummaryResponse getSummaryForDate(LocalDate date) {
+    public SummaryResponse getSummaryForDate(LocalDate date) {
         LocalDate startDate = Optional.ofNullable(date)
                 .orElse(LocalDate.now().minusDays(30));
 
         log.info("Get summary loans for date {}.", startDate);
 
         return dashboardRepository.getSummary(startDate);
+    }
+
+    @Override
+    public SummaryTotalResponse getSummaryTotal() {
+        log.info("Get summary total.");
+
+        return dashboardRepository.getTotalSummary();
     }
 }

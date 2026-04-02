@@ -19,6 +19,7 @@ public record LoanResponse(
         String notes,
         LoanStatus status,
         String customerName,
+        BigDecimal totalReceived,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {}

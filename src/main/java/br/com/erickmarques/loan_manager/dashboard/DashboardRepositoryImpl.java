@@ -15,9 +15,9 @@ public class DashboardRepositoryImpl implements DashboardRepository {
     private EntityManager entityManager;
 
     @Override
-    public DashboardSummaryResponse getSummary(LocalDate startDate) {
+    public SummaryResponse getSummary(LocalDate startDate) {
         return entityManager.createQuery("""
-            SELECT new br.com.erickmarques.loan_manager.dashboard.DashboardSummaryResponse(
+            SELECT new br.com.erickmarques.loan_manager.dashboard.SummaryResponse(
                 COALESCE(SUM(l.amount), 0),
                 (SELECT COALESCE(SUM(p.amount), 0) FROM Payment p WHERE p.paymentDate >= :startDate),
                 ((SELECT COALESCE(SUM(p.amount), 0) FROM Payment p WHERE p.paymentDate >= :startDate)
@@ -27,8 +27,19 @@ public class DashboardRepositoryImpl implements DashboardRepository {
             )
             FROM Loan l
             WHERE l.loanDate >= :startDate
-        """, DashboardSummaryResponse.class)
+        """, SummaryResponse.class)
                 .setParameter("startDate", startDate)
                 .getSingleResult();
+    }
+
+    @Override
+    public SummaryTotalResponse getTotalSummary() {
+        return entityManager.createQuery("""
+        SELECT new br.com.erickmarques.loan_manager.dashboard.SummaryTotalResponse(
+                    COALESCE(SUM(l.amount), 0),
+                    COALESCE(SUM(l.totalAmountToPay), 0)
+                )
+        FROM Loan l
+        """, SummaryTotalResponse.class).getSingleResult();
     }
 }

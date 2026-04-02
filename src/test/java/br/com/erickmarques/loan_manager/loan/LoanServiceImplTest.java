@@ -5,6 +5,7 @@ import br.com.erickmarques.loan_manager.builder.LoanBuilder;
 import br.com.erickmarques.loan_manager.builder.LoanRequestBuilder;
 import br.com.erickmarques.loan_manager.customer.CustomerNotFoundException;
 import br.com.erickmarques.loan_manager.customer.CustomerRepository;
+import br.com.erickmarques.loan_manager.payment.PaymentRepository;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -38,6 +40,9 @@ class LoanServiceImplTest {
 
     @Mock
     private CustomerRepository customerRepository;
+
+    @Mock
+    private PaymentRepository paymentRepository;
 
     @Nested
     class CreateTests {
@@ -123,9 +128,11 @@ class LoanServiceImplTest {
             var loanId = UUID.randomUUID();
             var loan = LoanBuilder.createDefault();
             var response = LoanResponse.builder().id(loan.getId()).build();
+            var amount = new BigDecimal("200");
 
+            when(paymentRepository.getTotalReceivedByLoan(any())).thenReturn(amount);
             when(loanRepository.findById(loanId)).thenReturn(Optional.of(loan));
-            when(loanMapper.toResponse(loan)).thenReturn(response);
+            when(loanMapper.toResponse(loan, amount)).thenReturn(response);
 
             // Act
             var result = service.findById(loanId);
@@ -156,18 +163,20 @@ class LoanServiceImplTest {
             var loan2 = LoanBuilder.createDefault().toBuilder().id(UUID.randomUUID()).build();
             var response1 = LoanResponse.builder().id(loan1.getId()).build();
             var response2 = LoanResponse.builder().id(loan2.getId()).build();
+            var amount = new BigDecimal("200");
 
             when(loanRepository.findAllByOrderByPaymentDateAsc()).thenReturn(List.of(loan1, loan2));
-            when(loanMapper.toResponse(loan1)).thenReturn(response1);
-            when(loanMapper.toResponse(loan2)).thenReturn(response2);
+            when(paymentRepository.getTotalReceivedByLoan(any())).thenReturn(amount);
+            when(loanMapper.toResponse(loan1, amount)).thenReturn(response1);
+            when(loanMapper.toResponse(loan2, amount)).thenReturn(response2);
 
             // Act
             var result = service.findAll();
 
             // Assert
             assertEquals(2, result.size());
-            verify(loanMapper).toResponse(loan1);
-            verify(loanMapper).toResponse(loan2);
+            verify(loanMapper).toResponse(loan1, amount);
+            verify(loanMapper).toResponse(loan2, amount);
         }
     }
 
@@ -182,19 +191,21 @@ class LoanServiceImplTest {
             var loan2 = LoanBuilder.createDefault().toBuilder().id(UUID.randomUUID()).build();
             var response1 = LoanResponse.builder().id(loan1.getId()).build();
             var response2 = LoanResponse.builder().id(loan2.getId()).build();
+            var amount = new BigDecimal("200");
 
             when(loanRepository.findAllByCustomerIdOrderByPaymentDateAsc(customerId))
                     .thenReturn(List.of(loan1, loan2));
-            when(loanMapper.toResponse(loan1)).thenReturn(response1);
-            when(loanMapper.toResponse(loan2)).thenReturn(response2);
+            when(paymentRepository.getTotalReceivedByLoan(any())).thenReturn(amount);
+            when(loanMapper.toResponse(loan1, amount)).thenReturn(response1);
+            when(loanMapper.toResponse(loan2, amount)).thenReturn(response2);
 
             // Act
             var result = service.findAllByCustomerId(customerId);
 
             // Assert
             assertEquals(2, result.size());
-            verify(loanMapper).toResponse(loan1);
-            verify(loanMapper).toResponse(loan2);
+            verify(loanMapper).toResponse(loan1, amount);
+            verify(loanMapper).toResponse(loan2, amount);
         }
     }
 
