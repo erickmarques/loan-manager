@@ -8,5 +8,6 @@ import java.math.BigDecimal;
 public record SummaryResponse(
         BigDecimal totalLoaned,
         BigDecimal totalReceived,
-        BigDecimal netAmount
+        BigDecimal netAmount,
+        Long overdueLoans
 ) {}

@@ -70,7 +70,7 @@ public class LoanServiceImpl implements LoanService {
     public List<LoanResponse> findAll() {
         log.info("Finding all loans.");
 
-        return loanRepository.findAllByOrderByPaymentDateAsc()
+        return loanRepository.findAllByOrderByPaymentDateDesc()
                 .stream()
                 .map(loan -> {
                     var totalReceived = paymentRepository.getTotalReceivedByLoan(loan.getId());

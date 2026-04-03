@@ -10,7 +10,7 @@ import java.util.UUID;
 public interface LoanRepository extends JpaRepository<Loan, UUID> {
 
     List<Loan> findAllByCustomerIdOrderByPaymentDateAsc(UUID customerId);
-    List<Loan> findAllByOrderByPaymentDateAsc();
+    List<Loan> findAllByOrderByPaymentDateDesc();
 
     @Query("""
         SELECT new br.com.erickmarques.loan_manager.loan.CustomerLoanSummaryProjection(

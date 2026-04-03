@@ -74,7 +74,7 @@ class LoanMapperImplTest {
             // Assert
             assertNotNull(response);
             assertEquals(loan.getId(), response.id());
-            assertEquals(loan.getCustomer().getName(), response.customerName());
+            assertEquals(loan.getCustomer().getName(), response.customer().name());
         }
 
         @Test

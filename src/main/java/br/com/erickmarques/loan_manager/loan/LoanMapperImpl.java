@@ -19,8 +19,8 @@ public class LoanMapperImpl implements LoanMapper {
                 .totalAmountToPay(loan.getTotalAmountToPay())
                 .negotiation(loan.isNegotiation())
                 .notes(loan.getNotes())
-                .status(loan.getStatus())
-                .customerName(loan.getCustomer().getName())
+                .status(loan.getStatus().getLabel())
+                .customer(createCustomerLoanResponse(loan))
                 .createdAt(loan.getCreatedAt())
                 .updatedAt(loan.getUpdatedAt())
                 .build();
@@ -37,8 +37,8 @@ public class LoanMapperImpl implements LoanMapper {
                 .totalAmountToPay(loan.getTotalAmountToPay())
                 .negotiation(loan.isNegotiation())
                 .notes(loan.getNotes())
-                .status(loan.getStatus())
-                .customerName(loan.getCustomer().getName())
+                .status(loan.getStatus().getLabel())
+                .customer(createCustomerLoanResponse(loan))
                 .totalReceived(totalReceived)
                 .createdAt(loan.getCreatedAt())
                 .updatedAt(loan.getUpdatedAt())
@@ -71,6 +71,13 @@ public class LoanMapperImpl implements LoanMapper {
                 .totalAmountToPay(request.totalAmountToPay())
                 .notes(request.notes())
                 .status(request.status())
+                .build();
+    }
+
+    private CustomerLoanResponse createCustomerLoanResponse(Loan loan){
+        return CustomerLoanResponse.builder()
+                .id(loan.getCustomer().getId())
+                .name(loan.getCustomer().getName())
                 .build();
     }
 }

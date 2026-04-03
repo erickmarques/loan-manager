@@ -165,7 +165,7 @@ class LoanServiceImplTest {
             var response2 = LoanResponse.builder().id(loan2.getId()).build();
             var amount = new BigDecimal("200");
 
-            when(loanRepository.findAllByOrderByPaymentDateAsc()).thenReturn(List.of(loan1, loan2));
+            when(loanRepository.findAllByOrderByPaymentDateDesc()).thenReturn(List.of(loan1, loan2));
             when(paymentRepository.getTotalReceivedByLoan(any())).thenReturn(amount);
             when(loanMapper.toResponse(loan1, amount)).thenReturn(response1);
             when(loanMapper.toResponse(loan2, amount)).thenReturn(response2);

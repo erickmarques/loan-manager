@@ -18,7 +18,7 @@ public class LoanResponseBuilder {
                 .percentage(new BigDecimal("2.5"))
                 .totalAmountToPay(new BigDecimal("1600.00"))
                 .negotiation(true)
-                .customerName("Teste Erick")
+                .customer(LoanCustomerBuilder.createDefault())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();

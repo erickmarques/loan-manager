@@ -23,7 +23,11 @@ public class DashboardRepositoryImpl implements DashboardRepository {
                 ((SELECT COALESCE(SUM(p.amount), 0) FROM Payment p WHERE p.paymentDate >= :startDate)
                 -
                 (COALESCE(SUM(l.amount), 0))
-                )
+                ),
+                (SELECT COUNT(lo)
+                    FROM Loan lo
+                 WHERE lo.paymentDate < CURRENT_DATE
+                    AND lo.status = 'OPEN')
             )
             FROM Loan l
             WHERE l.loanDate >= :startDate

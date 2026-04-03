@@ -66,7 +66,7 @@ class LoanControllerIntegrationTest {
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.amount").value(request.amount().doubleValue()))
-                .andExpect(jsonPath("$.customerName").value("John Doe"));
+                .andExpect(jsonPath("$.customer.name").value("John Doe"));
     }
 
     @Test
@@ -146,7 +146,7 @@ class LoanControllerIntegrationTest {
 
         mockMvc.perform(get(PATH + "/customer/{customerId}", customerId))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].customerName").value(createdResponse.customerName()));
+                .andExpect(jsonPath("$[0].customer.name").value(createdResponse.customer().name()));
     }
 
     @Test

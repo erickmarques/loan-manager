@@ -2,6 +2,7 @@ package br.com.erickmarques.loan_manager.builder;
 
 import br.com.erickmarques.loan_manager.customer.Customer;
 import br.com.erickmarques.loan_manager.loan.Loan;
+import br.com.erickmarques.loan_manager.loan.LoanStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ public class LoanBuilder {
                 .percentage(new BigDecimal("5.0"))
                 .totalAmountToPay(new BigDecimal("210.00"))
                 .negotiation(false)
+                .status(LoanStatus.OPEN)
                 .customer(defaultCustomer)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())

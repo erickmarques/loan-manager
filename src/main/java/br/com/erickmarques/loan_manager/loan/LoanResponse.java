@@ -17,8 +17,8 @@ public record LoanResponse(
         BigDecimal totalAmountToPay,
         boolean negotiation,
         String notes,
-        LoanStatus status,
-        String customerName,
+        String status,
+        CustomerLoanResponse customer,
         BigDecimal totalReceived,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
