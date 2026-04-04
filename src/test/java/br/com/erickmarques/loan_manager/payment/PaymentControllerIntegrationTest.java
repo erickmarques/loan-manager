@@ -134,7 +134,7 @@ class PaymentControllerIntegrationTest {
                 .amount(createRequest.amount().add(createRequest.amount()))
                 .loanId(createRequest.loanId())
                 .notes("updated")
-                .type(PaymentType.FINISHED)
+                .type(PaymentType.FINISHED.getLabel())
                 .build();
 
         mockMvc.perform(put(PATH_ID, existing.id())

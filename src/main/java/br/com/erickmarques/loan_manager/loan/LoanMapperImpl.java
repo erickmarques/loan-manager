@@ -56,7 +56,7 @@ public class LoanMapperImpl implements LoanMapper {
                 .customer(customer)
                 .totalAmountToPay(request.totalAmountToPay())
                 .notes(request.notes())
-                .status(request.status())
+                .status(LoanStatus.fromLabel(request.status()))
                 .build();
     }
 
@@ -70,7 +70,7 @@ public class LoanMapperImpl implements LoanMapper {
                 .negotiation(request.negotiation())
                 .totalAmountToPay(request.totalAmountToPay())
                 .notes(request.notes())
-                .status(request.status())
+                .status(LoanStatus.fromLabel(request.status()))
                 .build();
     }
 

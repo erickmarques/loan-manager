@@ -23,7 +23,7 @@ public record PaymentRequestCreate(
         String notes,
 
         @NotNull(message = "The field type is required.")
-        PaymentType type,
+        String type,
 
         @NotNull(message = "The field loanId is required.")
         UUID loanId

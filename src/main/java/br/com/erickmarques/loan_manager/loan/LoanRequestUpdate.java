@@ -36,7 +36,7 @@ public record LoanRequestUpdate(
 
         String notes,
 
-        LoanStatus status,
+        String status,
 
         boolean negotiation
 ) {}

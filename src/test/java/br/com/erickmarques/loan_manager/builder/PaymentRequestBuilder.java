@@ -15,7 +15,7 @@ public class PaymentRequestBuilder {
                 .paymentDate(LocalDate.now())
                 .amount(BigDecimal.valueOf(150.75))
                 .notes("Default payment request")
-                .type(PaymentType.INTEREST)
+                .type(PaymentType.INTEREST.getLabel())
                 .loanId(UUID.fromString("7e9a7b5c-3f4e-4a7d-9e8f-123456789abc"))
                 .build();
     }
@@ -25,7 +25,7 @@ public class PaymentRequestBuilder {
                 .paymentDate(LocalDate.now())
                 .amount(BigDecimal.valueOf(150.75))
                 .notes("Default payment request")
-                .type(PaymentType.INTEREST)
+                .type(PaymentType.INTEREST.getLabel())
                 .build();
     }
 
@@ -34,7 +34,7 @@ public class PaymentRequestBuilder {
                 .paymentDate(LocalDate.now())
                 .amount(BigDecimal.valueOf(150.75))
                 .notes("Default payment request")
-                .type(PaymentType.INTEREST)
+                .type(PaymentType.INTEREST.getLabel())
                 .loanId(loanId)
                 .build();
     }

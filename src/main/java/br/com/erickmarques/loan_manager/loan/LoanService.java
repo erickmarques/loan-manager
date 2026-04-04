@@ -13,7 +13,7 @@ public interface LoanService {
 
     List<LoanResponse> findAll();
 
-    List<LoanResponse> findAllByCustomerId(UUID customerId);
+    List<LoanResponse> findAllByCustomerId(UUID customerId, String status);
 
     void deleteById(UUID id);
 }

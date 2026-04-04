@@ -13,7 +13,7 @@ public record PaymentResponse(
         LocalDate paymentDate,
         BigDecimal amount,
         String notes,
-        PaymentType type,
+        String type,
         UUID loanId,
         LocalDateTime createdAt,
         LocalDateTime updatedAt

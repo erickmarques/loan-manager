@@ -68,9 +68,9 @@ public class LoanServiceImpl implements LoanService {
 
     @Override
     public List<LoanResponse> findAll() {
-        log.info("Finding all loans.");
+        log.info("Finding all loans with status open.");
 
-        return loanRepository.findAllByOrderByPaymentDateDesc()
+        return loanRepository.findAllByStatusOrderByPaymentDateAsc(LoanStatus.OPEN)
                 .stream()
                 .map(loan -> {
                     var totalReceived = paymentRepository.getTotalReceivedByLoan(loan.getId());
@@ -80,10 +80,12 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public List<LoanResponse> findAllByCustomerId(UUID customerId) {
-        log.info("Finding all loans for customerId {}.", customerId);
+    public List<LoanResponse> findAllByCustomerId(UUID customerId, String status) {
+        var loanStatus = LoanStatus.fromLabel(status);
 
-        return loanRepository.findAllByCustomerIdOrderByPaymentDateAsc(customerId)
+        log.info("Finding all loans for customerId {} and status {}.", customerId, loanStatus);
+
+        return loanRepository.findAllByCustomerIdAndStatusOrderByPaymentDateAsc(customerId, loanStatus)
                 .stream()
                 .map(loan -> {
                     var totalReceived = paymentRepository.getTotalReceivedByLoan(loan.getId());

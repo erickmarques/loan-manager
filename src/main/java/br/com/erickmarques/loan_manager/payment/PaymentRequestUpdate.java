@@ -22,5 +22,5 @@ public record PaymentRequestUpdate(
         String notes,
 
         @NotNull(message = "The field type is required.")
-        PaymentType type
+        String type
 ) {}

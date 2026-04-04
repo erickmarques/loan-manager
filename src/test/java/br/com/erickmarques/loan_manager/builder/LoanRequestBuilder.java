@@ -18,7 +18,7 @@ public class LoanRequestBuilder {
                 .percentage(new BigDecimal("2.5"))
                 .totalAmountToPay(new BigDecimal("1600.00"))
                 .negotiation(false)
-                .status(LoanStatus.OPEN)
+                .status(LoanStatus.OPEN.getLabel())
                 .build();
 
     }
@@ -32,7 +32,7 @@ public class LoanRequestBuilder {
                 .totalAmountToPay(new BigDecimal("1600.00"))
                 .negotiation(false)
                 .customerId(customerId)
-                .status(LoanStatus.OPEN)
+                .status(LoanStatus.OPEN.getLabel())
                 .build();
 
     }

@@ -37,7 +37,7 @@ class PaymentMapperImplTest {
             assertEquals(request.paymentDate(), result.getPaymentDate());
             assertEquals(request.amount(), result.getAmount());
             assertEquals(request.notes(), result.getNotes());
-            assertEquals(request.type(), result.getType());
+            assertEquals(PaymentType.INTEREST, result.getType());
             assertEquals(loan, result.getLoan());
         }
 
@@ -54,7 +54,6 @@ class PaymentMapperImplTest {
             assertNull(result.getPaymentDate());
             assertNull(result.getAmount());
             assertNull(result.getNotes());
-            assertNull(result.getType());
             assertEquals(loan, result.getLoan());
         }
     }
@@ -76,7 +75,7 @@ class PaymentMapperImplTest {
             assertEquals(payment.getPaymentDate(), response.paymentDate());
             assertEquals(payment.getAmount(), response.amount());
             assertEquals(payment.getNotes(), response.notes());
-            assertEquals(payment.getType(), response.type());
+            assertEquals(PaymentType.INTEREST.getLabel(), response.type());
             assertEquals(payment.getLoan().getId(), response.loanId());
             assertEquals(payment.getCreatedAt(), response.createdAt());
             assertEquals(payment.getUpdatedAt(), response.updatedAt());
@@ -106,7 +105,7 @@ class PaymentMapperImplTest {
             assertEquals(request.paymentDate(), updated.getPaymentDate());
             assertEquals(request.amount(), updated.getAmount());
             assertEquals(request.notes(), updated.getNotes());
-            assertEquals(request.type(), updated.getType());
+            assertEquals(PaymentType.INTEREST, updated.getType());
             assertEquals(loan, updated.getLoan());
         }
 
@@ -124,7 +123,6 @@ class PaymentMapperImplTest {
             assertNull(updated.getPaymentDate());
             assertNull(updated.getAmount());
             assertNull(updated.getNotes());
-            assertNull(updated.getType());
             assertEquals(loan, updated.getLoan());
         }
     }

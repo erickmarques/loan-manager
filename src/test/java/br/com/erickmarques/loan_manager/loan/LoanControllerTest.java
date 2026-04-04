@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -112,15 +113,15 @@ class LoanControllerTest {
             var customerId = UUID.randomUUID();
             var loan1 = LoanResponseBuilder.createDefault();
             var loan2 = LoanResponseBuilder.createDefault();
-            when(loanService.findAllByCustomerId(customerId)).thenReturn(List.of(loan1, loan2));
+            when(loanService.findAllByCustomerId(customerId, LoanStatus.OPEN.getLabel())).thenReturn(List.of(loan1, loan2));
 
             // Act
-            ResponseEntity<List<LoanResponse>> result = loanController.findAllByCustomerId(customerId);
+            ResponseEntity<List<LoanResponse>> result = loanController.findAllByCustomerId(customerId, LoanStatus.OPEN.getLabel());
 
             // Assert
             assertEquals(HttpStatus.OK, result.getStatusCode());
             assertEquals(2, result.getBody().size());
-            verify(loanService).findAllByCustomerId(customerId);
+            verify(loanService).findAllByCustomerId(customerId, LoanStatus.OPEN.getLabel());
         }
     }
 

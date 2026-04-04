@@ -10,4 +10,13 @@ public enum LoanStatus {
     CLOSED("Finalizado");
 
     private final String label;
+
+    public static LoanStatus fromLabel(String label) {
+        for (LoanStatus type : LoanStatus.values()) {
+            if (type.getLabel().equalsIgnoreCase(label)) {
+                return type;
+            }
+        }
+        return LoanStatus.OPEN;
+    }
 }

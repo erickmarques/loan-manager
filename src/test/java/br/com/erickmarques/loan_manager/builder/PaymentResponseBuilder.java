@@ -16,7 +16,7 @@ public class PaymentResponseBuilder {
                 .paymentDate(LocalDate.now())
                 .amount(BigDecimal.valueOf(150.75))
                 .notes("Default payment response")
-                .type(PaymentType.INTEREST)
+                .type(PaymentType.INTEREST.getLabel())
                 .loanId(UUID.fromString("7e9a7b5c-3f4e-4a7d-9e8f-123456789abc"))
                 .createdAt(LocalDateTime.now().minusDays(1))
                 .updatedAt(LocalDateTime.now())

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -106,8 +107,9 @@ public class LoanController {
             }
     )
     @GetMapping("/customer/{customerId}")
-    public ResponseEntity<List<LoanResponse>> findAllByCustomerId(@PathVariable UUID customerId) {
-        return ResponseEntity.ok(loanService.findAllByCustomerId(customerId));
+    public ResponseEntity<List<LoanResponse>> findAllByCustomerId(@PathVariable UUID customerId,
+                                                                  @RequestParam(required = false) String status) {
+        return ResponseEntity.ok(loanService.findAllByCustomerId(customerId, status));
     }
 
     @Operation(

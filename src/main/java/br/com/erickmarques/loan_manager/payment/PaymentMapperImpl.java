@@ -13,7 +13,7 @@ public class PaymentMapperImpl implements PaymentMapper {
                 .paymentDate(payment.getPaymentDate())
                 .amount(payment.getAmount())
                 .notes(payment.getNotes())
-                .type(payment.getType())
+                .type(payment.getType().getLabel())
                 .loanId(payment.getLoan().getId())
                 .createdAt(payment.getCreatedAt())
                 .updatedAt(payment.getUpdatedAt())
@@ -26,7 +26,7 @@ public class PaymentMapperImpl implements PaymentMapper {
                 .paymentDate(request.paymentDate())
                 .amount(request.amount())
                 .notes(request.notes())
-                .type(request.type())
+                .type(PaymentType.fromLabel(request.type()))
                 .loan(loan)
                 .build();
     }
@@ -37,7 +37,7 @@ public class PaymentMapperImpl implements PaymentMapper {
                 .paymentDate(request.paymentDate())
                 .amount(request.amount())
                 .notes(request.notes())
-                .type(request.type())
+                .type(PaymentType.fromLabel(request.type()))
                 .build();
     }
 }

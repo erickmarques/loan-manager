@@ -39,7 +39,7 @@ public record LoanRequestCreate(
 
         String notes,
 
-        LoanStatus status,
+        String status,
 
         boolean negotiation
 ) {}
