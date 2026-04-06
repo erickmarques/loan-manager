@@ -30,4 +30,14 @@ public class DashboardServiceImpl implements DashboardService {
 
         return dashboardRepository.getTotalSummary();
     }
+
+    @Override
+    public ReceivedByTypeResponse getSummaryReceivedByType(LocalDate date) {
+        LocalDate startDate = Optional.ofNullable(date)
+                .orElse(LocalDate.now().minusDays(30));
+
+        log.info("Get summary received by type and date {}.", startDate);
+
+        return dashboardRepository.getSummaryReceivedByType(startDate);
+    }
 }

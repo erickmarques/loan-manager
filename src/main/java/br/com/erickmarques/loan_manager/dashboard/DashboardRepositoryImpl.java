@@ -46,4 +46,20 @@ public class DashboardRepositoryImpl implements DashboardRepository {
         FROM Loan l
         """, SummaryTotalResponse.class).getSingleResult();
     }
+
+    @Override
+    public ReceivedByTypeResponse getSummaryReceivedByType(LocalDate localDate) {
+        return entityManager.createQuery("""
+        SELECT new br.com.erickmarques.loan_manager.dashboard.ReceivedByTypeResponse(
+            COALESCE(SUM(CASE WHEN p.type = 'INTEREST' THEN p.amount ELSE 0 END), 0),
+            COALESCE(SUM(CASE WHEN p.type = 'FINISHED' THEN p.amount ELSE 0 END), 0),
+            COALESCE(SUM(CASE WHEN p.type = 'AGREEMENT' THEN p.amount ELSE 0 END), 0)
+        )
+        FROM Payment p
+        WHERE p.paymentDate >= :startDate
+    """, ReceivedByTypeResponse.class)
+                .setParameter("startDate", localDate)
+                .getSingleResult();
+    }
+
 }

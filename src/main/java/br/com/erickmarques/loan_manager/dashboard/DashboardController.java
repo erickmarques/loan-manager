@@ -44,4 +44,8 @@ public class DashboardController {
         return ResponseEntity.ok(dashboardService.getSummaryTotal());
     }
 
+    @GetMapping("/received-type")
+    public ResponseEntity<ReceivedByTypeResponse> getSummaryReceivedByType(@RequestParam(required = false) LocalDate date) {
+        return ResponseEntity.ok(dashboardService.getSummaryReceivedByType(date));
+    }
 }

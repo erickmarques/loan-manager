@@ -6,4 +6,5 @@ import java.time.LocalDate;
 public interface DashboardService {
     SummaryResponse getSummaryForDate(LocalDate date);
     SummaryTotalResponse getSummaryTotal();
+    ReceivedByTypeResponse getSummaryReceivedByType(LocalDate localDate);
 }
