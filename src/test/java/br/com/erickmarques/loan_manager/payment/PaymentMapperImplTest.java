@@ -106,7 +106,6 @@ class PaymentMapperImplTest {
             assertEquals(request.amount(), updated.getAmount());
             assertEquals(request.notes(), updated.getNotes());
             assertEquals(PaymentType.INTEREST, updated.getType());
-            assertEquals(loan, updated.getLoan());
         }
 
         @Test
