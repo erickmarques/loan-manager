@@ -12,7 +12,7 @@ spring:
     jpa:
       show-sql: true
       hibernate:
-        ddl-auto: none
+        ddl-auto: update
       properties:
         hibernate:
           dialect: org.hibernate.dialect.PostgreSQLDialect
@@ -22,3 +22,7 @@ jwt:
   secret: ${JWT_SECRET}
   expiration: 3600000
   issuer: loanAPI
+
+aws:
+  s3:
+    bucket: loan-manager-bucket-2026
