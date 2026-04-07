@@ -3,6 +3,7 @@ package br.com.erickmarques.loan_manager.upload;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,17 +20,17 @@ import java.util.UUID;
         name = "Uploads and Downloads API",
         description = "Operations related to upload and download file."
 )
-public class UploadController {
+public class FileController {
 
-    private final UploadService uploadService;
+    private final FileService fileService;
 
     @PostMapping("/presigned-url")
-    public UploadUrlResponse generateUrl(@RequestBody UploadRequest request) {
-        return uploadService.generateUrl(request);
+    public FileResponse generateUrl(@RequestBody @Validated UploadRequest request) {
+        return fileService.generateUrl(request);
     }
 
     @GetMapping("/download-url")
-    public UploadUrlResponse getFile(@RequestParam UUID key, @RequestParam EntityType type) {
-        return uploadService.generateDownloadUrl(key, type);
+    public FileResponse getFile(@RequestParam UUID id, @RequestParam EntityType type) {
+        return fileService.generateDownloadUrl(id, type);
     }
 }

@@ -12,10 +12,7 @@ public record UploadRequest(
         EntityType entityType,
 
         @NotNull
-        UUID entityId,
-
-        @NotBlank
-        String fileName,
+        UUID id,
 
         @NotBlank
         String contentType

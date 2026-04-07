@@ -14,42 +14,42 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UploadServiceImpl implements UploadService {
+public class FileServiceImpl implements FileService {
 
     private final LoanRepository loanRepository;
     private final PaymentRepository paymentRepository;
     private final S3Service s3Service;
 
     @Override
-    public UploadUrlResponse generateUrl(UploadRequest request) {
-        log.info("Generating url for {} and id {}.", request.entityType(), request.entityId());
+    public FileResponse generateUrl(UploadRequest request) {
+        log.info("Generating url for {} and id {}.", request.entityType(), request.id());
 
         validateEntityExists(request);
 
-        String key = buildKey(request.entityType().name(), request.entityId());
+        String key = buildKey(request.entityType().name(), request.id());
 
         String url = s3Service.generatePresignedUrl(key, request.contentType());
 
-        return new UploadUrlResponse(url, key);
+        return new FileResponse(url, key);
     }
 
     @Override
-    public UploadUrlResponse  generateDownloadUrl(UUID key, EntityType type) {
-        String buildKey = buildKey(type.name(), key);
+    public FileResponse generateDownloadUrl(UUID id, EntityType type) {
+        String buildKey = buildKey(type.name(), id);
 
         log.info("Generating URL for download | buildKey {}.", buildKey);
 
         String url = s3Service.generateDownloadUrl(buildKey);
 
-        return new UploadUrlResponse(url, buildKey);
+        return new FileResponse(url, buildKey);
     }
 
     private void validateEntityExists(UploadRequest request) {
         switch (request.entityType()) {
-            case LOAN -> loanRepository.findById(request.entityId())
-                    .orElseThrow(() -> new LoanNotFoundException(request.entityId()));
-            case PAYMENT -> paymentRepository.findById(request.entityId())
-                    .orElseThrow(() -> new PaymentNotFoundException(request.entityId()));
+            case LOAN -> loanRepository.findById(request.id())
+                    .orElseThrow(() -> new LoanNotFoundException(request.id()));
+            case PAYMENT -> paymentRepository.findById(request.id())
+                    .orElseThrow(() -> new PaymentNotFoundException(request.id()));
         }
 
         log.info("Found {}.", request.entityType());
