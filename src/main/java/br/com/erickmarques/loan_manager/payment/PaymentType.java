@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum PaymentType {
     INTEREST("Juros"),
     FINISHED("Finalizado"),
-    AGREEMENT("Negociação");
+    AGREEMENT("Negociação"),
+    OTHERS("Outros");
 
     private final String label;
 

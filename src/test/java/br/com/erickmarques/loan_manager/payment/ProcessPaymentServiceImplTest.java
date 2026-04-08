@@ -74,8 +74,29 @@ class ProcessPaymentServiceImplTest {
             service.process(payment);
 
             // Assert
-            assertEquals(new BigDecimal("700.00"), loan.getAmount());
             assertEquals(new BigDecimal("1200.00"), loan.getTotalAmountToPay());
+            assertEquals(LoanStatus.OPEN, loan.getStatus());
+            verify(loanRepository).save(loan);
+        }
+
+        @Test
+        void shouldApplyNegotiationAndCloseLoan() {
+            // Arrange
+            Loan loan = LoanBuilder.createDefault();
+
+            var payment = PaymentBuilder.createDefault().toBuilder()
+                    .type(PaymentType.AGREEMENT)
+                    .amount(new BigDecimal("210.00"))
+                    .notes("Special negotiation")
+                    .loan(loan)
+                    .build();
+
+            // Act
+            service.process(payment);
+
+            // Assert
+            assertEquals(new BigDecimal("0.00"), loan.getTotalAmountToPay());
+            assertEquals(LoanStatus.CLOSED, loan.getStatus());
             verify(loanRepository).save(loan);
         }
 

@@ -30,6 +30,9 @@ public class ProcessPaymentServiceImpl implements ProcessPaymentService {
             case FINISHED -> closeLoan(loan, payment);
             case AGREEMENT -> applyNegotiationDiscount(loan, payment);
             case INTEREST -> postponeLoanDueDate(loan);
+            case OTHERS -> {
+                log.info("[PAYMENT] Type OTHERS - no action taken");
+            }
             default -> throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "Unsupported payment type: " + payment.getType()
@@ -52,19 +55,20 @@ public class ProcessPaymentServiceImpl implements ProcessPaymentService {
 
         log.info("[PAYMENT] Applying negotiation rules for Loan {}", loan.getId());
 
-        var newAmount = loan.getAmount().subtract(payment.getAmount());
         var newTotal = loan.getTotalAmountToPay().subtract(payment.getAmount());
 
-        loan.setAmount(newAmount.max(BigDecimal.ZERO));
         loan.setTotalAmountToPay(newTotal.max(BigDecimal.ZERO));
 
+        if (loan.getTotalAmountToPay().compareTo(BigDecimal.ZERO) == 0) {
+            loan.setStatus(LoanStatus.CLOSED);
+            log.info("Closing Loan.");
+        }
         if (payment.getNotes() == null || payment.getNotes().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "For payment agreements, please provide some notes!");
         }
 
-        log.info("[PAYMENT] Negotiation updated Loan {}: newAmount = {}, newTotalToPay = {}",
+        log.info("[PAYMENT] Negotiation updated Loan {}:, newTotalToPay = {}",
                 loan.getId(),
-                loan.getAmount(),
                 loan.getTotalAmountToPay()
         );
     }
