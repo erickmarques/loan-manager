@@ -1,10 +1,11 @@
 package br.com.erickmarques.loan_manager.customer;
 
 import br.com.erickmarques.loan_manager.loan.LoanRepository;
-import br.com.erickmarques.loan_manager.loan.LoanStatus;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -82,8 +83,10 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteById(UUID id) {
         log.info("Requesting customer delete with ID {}.", id);
 
-        if (!customerRepository.existsById(id)) {
-            throw new CustomerNotFoundException(id);
+        var customer = findCustomerById(id);
+
+        if (loanRepository.existsByCustomerId(customer.getId())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Exist loans for Customer.");
         }
 
         customerRepository.deleteById(id);

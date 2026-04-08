@@ -63,7 +63,7 @@ public class PaymentServiceImpl implements PaymentService {
     public List<PaymentResponse> findAll() {
         log.info("Finding all payments.");
 
-        return paymentRepository.findAllByOrderByPaymentDateAsc()
+        return paymentRepository.findAllByOrderByPaymentDateDesc()
                 .stream()
                 .map(paymentMapper::toResponse)
                 .toList();

@@ -15,6 +15,7 @@ public class PaymentMapperImpl implements PaymentMapper {
                 .notes(payment.getNotes())
                 .type(payment.getType().getLabel())
                 .loanId(payment.getLoan().getId())
+                .customerName(payment.getLoan().getCustomer().getName())
                 .createdAt(payment.getCreatedAt())
                 .updatedAt(payment.getUpdatedAt())
                 .build();

@@ -161,7 +161,7 @@ class PaymentServiceImplTest {
             var r1 = PaymentResponse.builder().id(p1.getId()).build();
             var r2 = PaymentResponse.builder().id(p2.getId()).build();
 
-            when(paymentRepository.findAllByOrderByPaymentDateAsc()).thenReturn(List.of(p1, p2));
+            when(paymentRepository.findAllByOrderByPaymentDateDesc()).thenReturn(List.of(p1, p2));
             when(paymentMapper.toResponse(p1)).thenReturn(r1);
             when(paymentMapper.toResponse(p2)).thenReturn(r2);
 

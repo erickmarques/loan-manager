@@ -99,8 +99,10 @@ public class LoanServiceImpl implements LoanService {
     public void deleteById(UUID id) {
         log.info("Requesting loan deletion with ID {}.", id);
 
-        if (!loanRepository.existsById(id)) {
-            throw new LoanNotFoundException(id);
+       var loan = findLoanById(id);
+
+        if (paymentRepository.existsByLoanId(loan.getId())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Exist payments for Loan.");
         }
 
         loanRepository.deleteById(id);

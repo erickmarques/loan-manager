@@ -12,6 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -180,24 +181,35 @@ class CustomerServiceImplTest {
         @Test
         void shouldDeleteCustomerSuccessfully() {
             // Arrange
-            UUID id = UUID.randomUUID();
-            when(customerRepository.existsById(id)).thenReturn(true);
+            Customer customer = CustomerBuilder.createDefault();
+            when(customerRepository.findById(customer.getId())).thenReturn(Optional.of(customer));
 
             // Act
-            service.deleteById(id);
+            service.deleteById(customer.getId());
 
             // Assert
-            verify(customerRepository).deleteById(id);
+            verify(customerRepository).deleteById(customer.getId());
         }
 
         @Test
         void shouldThrowWhenDeletingNonexistentCustomer() {
             // Arrange
-            UUID id = UUID.randomUUID();
-            when(customerRepository.existsById(id)).thenReturn(false);
+            Customer customer = CustomerBuilder.createDefault();
+            when(customerRepository.findById(customer.getId())).thenReturn(Optional.empty());
 
             // Act & Assert
-            assertThrows(CustomerNotFoundException.class, () -> service.deleteById(id));
+            assertThrows(CustomerNotFoundException.class, () -> service.deleteById(customer.getId()));
+        }
+
+        @Test
+        void shouldThrowWhenDeletingExistLoan() {
+            // Arrange
+            Customer customer = CustomerBuilder.createDefault();
+            when(customerRepository.findById(customer.getId())).thenReturn(Optional.of(customer));
+            when(loanRepository.existsByCustomerId(customer.getId())).thenReturn(true);
+
+            // Act & Assert
+            assertThrows(ResponseStatusException.class, () -> service.deleteById(customer.getId()));
         }
     }
 }

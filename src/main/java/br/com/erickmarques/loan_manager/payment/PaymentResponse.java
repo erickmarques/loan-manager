@@ -15,6 +15,7 @@ public record PaymentResponse(
         String notes,
         String type,
         UUID loanId,
+        String customerName,
         LocalDateTime createdAt,
         LocalDateTime updatedAt
 ) {}

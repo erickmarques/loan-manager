@@ -215,21 +215,21 @@ class LoanServiceImplTest {
         @Test
         void shouldDeleteLoanSuccessfully() {
             // Arrange
-            var loanId = UUID.randomUUID();
-            when(loanRepository.existsById(loanId)).thenReturn(true);
+            var loan = LoanBuilder.createDefault();
+            when(loanRepository.findById(loan.getId())).thenReturn(Optional.of(loan));
 
             // Act
-            service.deleteById(loanId);
+            service.deleteById(loan.getId());
 
             // Assert
-            verify(loanRepository).deleteById(loanId);
+            verify(loanRepository).deleteById(loan.getId());
         }
 
         @Test
         void shouldThrowWhenLoanDoesNotExistOnDelete() {
             // Arrange
             var loanId = UUID.randomUUID();
-            when(loanRepository.existsById(loanId)).thenReturn(false);
+            when(loanRepository.findById(loanId)).thenReturn(Optional.empty());
 
             // Act + Assert
             assertThrows(LoanNotFoundException.class, () -> service.deleteById(loanId));

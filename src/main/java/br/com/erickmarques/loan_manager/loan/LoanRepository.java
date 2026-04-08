@@ -12,6 +12,8 @@ public interface LoanRepository extends JpaRepository<Loan, UUID> {
     List<Loan> findAllByCustomerIdAndStatusOrderByPaymentDateAsc(UUID customerId, LoanStatus status);
     List<Loan> findAllByStatusOrderByPaymentDateAsc(LoanStatus status);
 
+    boolean existsByCustomerId(UUID customerId);
+
     @Query("""
         SELECT new br.com.erickmarques.loan_manager.loan.CustomerLoanSummaryProjection(
             COALESCE(SUM(CASE WHEN l.status = br.com.erickmarques.loan_manager.loan.LoanStatus.OPEN THEN 1 ELSE 0 END), 0),

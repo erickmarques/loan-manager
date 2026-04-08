@@ -13,7 +13,9 @@ import java.util.UUID;
 public interface PaymentRepository extends JpaRepository<Payment, UUID> {
     List<Payment> findAllByLoanIdOrderByPaymentDateAsc(UUID loanId);
 
-    List<Payment> findAllByOrderByPaymentDateAsc();
+    List<Payment> findAllByOrderByPaymentDateDesc();
+
+    boolean existsByLoanId(UUID loanId);
 
     @Query("SELECT COALESCE(SUM(p.amount), 0) FROM Payment p WHERE p.loan.id = :loanId")
     BigDecimal getTotalReceivedByLoan(@Param("loanId") UUID loanId);
