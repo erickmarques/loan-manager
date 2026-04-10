@@ -26,7 +26,7 @@ public class DashboardServiceImpl implements DashboardService {
 
     @Override
     public SummaryTotalResponse getSummaryTotal() {
-        log.info("Get summary total.");
+        log.info("Get summary total loans closed.");
 
         return dashboardRepository.getTotalSummary();
     }

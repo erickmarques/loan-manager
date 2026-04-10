@@ -44,6 +44,7 @@ public class DashboardRepositoryImpl implements DashboardRepository {
                     COALESCE(SUM(l.totalAmountToPay), 0)
                 )
         FROM Loan l
+        WHERE l.status = 'OPEN'
         """, SummaryTotalResponse.class).getSingleResult();
     }
 
