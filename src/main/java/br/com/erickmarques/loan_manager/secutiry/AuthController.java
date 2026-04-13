@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +22,8 @@ public class AuthController {
     private final TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<TokenResponseDTO> createToken(@Valid @RequestBody TokenRequestDTO dto) {
-        
+    public ResponseEntity<TokenResponse> createToken(@Valid @RequestBody TokenRequest dto) {
+
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(dto.email(), dto.password());
 
@@ -32,5 +33,18 @@ public class AuthController {
         var tokenResponseDTO = tokenService.generateToken(user);
 
         return ResponseEntity.ok(tokenResponseDTO);
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> getUser(Authentication authentication) {
+
+        User user = (User) authentication.getPrincipal();
+
+        return ResponseEntity.ok(
+                UserResponse.builder()
+                        .id(user.getId())
+                        .name(user.getName())
+                        .build()
+        );
     }
 }

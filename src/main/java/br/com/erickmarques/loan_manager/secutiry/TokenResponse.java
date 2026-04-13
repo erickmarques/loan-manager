@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class TokenResponseDTO {
+public class TokenResponse {
     private String token;
     private String type;
     private Long expiresIn;

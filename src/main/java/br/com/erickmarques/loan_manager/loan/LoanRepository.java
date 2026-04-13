@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -11,6 +12,18 @@ public interface LoanRepository extends JpaRepository<Loan, UUID> {
 
     List<Loan> findAllByCustomerIdAndStatusOrderByPaymentDateAsc(UUID customerId, LoanStatus status);
     List<Loan> findAllByStatusOrderByPaymentDateAsc(LoanStatus status);
+    @Query("""
+        SELECT new br.com.erickmarques.loan_manager.loan.LoanNotificationDTO(
+            l.id,
+            c.id,
+            c.name,
+            l.totalAmountToPay
+        )
+        FROM Loan l
+        JOIN l.customer c
+        WHERE l.paymentDate = :date
+    """)
+    List<LoanNotificationDTO> findAllByPaymentDate(LocalDate date);
 
     boolean existsByCustomerId(UUID customerId);
 
