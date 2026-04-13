@@ -21,7 +21,7 @@ public class AuthController {
     private final TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity<TokenResponseDTO> getToken(@Valid @RequestBody TokenRequestDTO dto) {
+    public ResponseEntity<TokenResponseDTO> createToken(@Valid @RequestBody TokenRequestDTO dto) {
         
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(dto.email(), dto.password());
@@ -29,8 +29,8 @@ public class AuthController {
         Authentication authenticate = this.authenticationManager.authenticate(usernamePasswordAuthenticationToken);
 
         var user = (User) authenticate.getPrincipal();
-        var token = tokenService.generateToken(user);
+        var tokenResponseDTO = tokenService.generateToken(user);
 
-        return ResponseEntity.ok(new TokenResponseDTO(token));
+        return ResponseEntity.ok(tokenResponseDTO);
     }
 }

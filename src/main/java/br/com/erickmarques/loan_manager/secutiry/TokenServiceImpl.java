@@ -14,8 +14,9 @@ public class TokenServiceImpl implements TokenService {
 
     private final JwtProperties jwtProperties;
 
-    public String generateToken(User user) {
-        return JWT.create()
+    @Override
+    public TokenResponseDTO generateToken(User user) {
+        var token = JWT.create()
                 .withIssuer(jwtProperties.getIssuer())
                 .withSubject(user.getUsername())
                 .withClaim("id", user.getId().toString())
@@ -23,8 +24,16 @@ public class TokenServiceImpl implements TokenService {
                         .plusMinutes(jwtProperties.getExpiration() / 60000)
                         .toInstant(ZoneOffset.of("-03:00"))
                 ).sign(Algorithm.HMAC256(jwtProperties.getSecret()));
+
+        return TokenResponseDTO.builder()
+                .token(token)
+                .type(jwtProperties.getType())
+                .expiresIn(jwtProperties.getExpiration())
+                .issuedAt(LocalDateTime.now())
+                .build();
     }
 
+    @Override
     public String getSubject(String token) {
         return JWT.require(Algorithm.HMAC256(jwtProperties.getSecret()))
                 .withIssuer(jwtProperties.getIssuer())
